@@ -1,0 +1,62 @@
+import React, { useState } from 'react';
+
+// TodoList component
+const TodoList = () => {
+  // State for the task input and tasks list
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  // Event handler for task input change
+  const handleTaskChange = (e) => {
+    setTask(e.target.value);
+  };
+
+  // Event handler for adding a task
+  const handleAddTask = () => {
+    if (task.trim() !== '') { // Check if the task is not empty
+      setTasks([...tasks, task]); // Add the new task to the tasks list
+      setTask(''); // Clear the task input
+    }
+  };
+
+  // Event handler for removing a task
+  const handleRemoveTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index); // Filter out the task at the specified index
+    setTasks(updatedTasks); // Update the tasks list
+  };
+
+  // Render the TodoList component
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <input
+        type="text"
+        placeholder="Enter a task"
+        value={task}
+        onChange={handleTaskChange}
+      />
+      <button onClick={handleAddTask}>Add Task</button>
+      <ul>
+        {/* Map through the tasks list and render each task */}
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task}
+            {/* Button to remove the task */}
+            <button onClick={() => handleRemoveTask(index)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// App component
+const App = () => {
+  return (
+    <div>
+      <TodoList /> {/* Render the TodoList component */}
+    </div>
+  );
+};
+
+export default App; // Export the App component as the default export
